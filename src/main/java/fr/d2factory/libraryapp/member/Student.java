@@ -3,6 +3,7 @@ package fr.d2factory.libraryapp.member;
 import java.util.List;
 
 import fr.d2factory.libraryapp.book.Book;
+import fr.d2factory.libraryapp.constant.AppConstant;
 
 public class Student extends Member {
 	
@@ -18,16 +19,16 @@ public class Student extends Member {
 	@Override
 	public boolean payBook(int numberOfDays) {
 		float amount = 0;
-		if (numberOfDays <= 30) {
-			amount = numberOfDays * 0.10f;
+		if (numberOfDays <= AppConstant.STUDENT_PERIOD) {
+			amount = numberOfDays * AppConstant.AMOUNT_PER_DAY;
 		} else {
-			amount = (30 * 0.10f) + ((numberOfDays - 30) * 0.15f);
+			amount = (AppConstant.STUDENT_PERIOD * AppConstant.AMOUNT_PER_DAY) + ((numberOfDays - AppConstant.STUDENT_PERIOD) * AppConstant.STUDENT_AMOUNT_LATE);
 		}
 		if (this.firstYear) {
-			if (numberOfDays <= 15) {
+			if (numberOfDays <= AppConstant.STUDENT_FREE_PERIOD) {
 				amount = 0f;
 			} else {
-				amount = amount - (15 * 0.10f);
+				amount = amount - (AppConstant.STUDENT_FREE_PERIOD * AppConstant.AMOUNT_PER_DAY);
 			}
 		}
 		if (this.getWallet() > amount) {

@@ -36,14 +36,10 @@ public class LibraryTest {
     	this.bookRepository = new BookRepository();
         //DONE - add some test books (use BookRepository#addBooks) from books.json
     	JSONParser jsonParser = new JSONParser();
-
         try (FileReader reader = new FileReader("src/test/resources/books.json"))
         {
-            //Read JSON file
             Object obj = jsonParser.parse(reader);
             JSONArray bookList = (JSONArray) obj;
-            //Iterate over book array
-            
             bookList.forEach(book -> {
             	parseBookObject( (JSONObject) book);
             });
@@ -55,19 +51,15 @@ public class LibraryTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//    	List<Book> books = new ArrayList<Book>();
-//    	books.add(new Book("Harry Potter","J.K. Rowling",new ISBN(46578964513L)));
         bookRepository.addBooks(books);
         this.library = new LibraryImplementation();
         ((LibraryImplementation)this.library).setBookRepository(this.bookRepository);
-        //TODO add some test books (use BookRepository#addBooks)
-        //TODO to help you a file called books.json is available in src/test/resources
-    	
-      
+
         s1 = new Student(1, "firas sahli", 100.0f, true);
         s2 = new Resident(2, "firas", 10.0f);
         s3 = new Student(3, "sahli", 5.0f, false);
     }
+    
     private void parseBookObject(JSONObject book)
     {
         String title = (String) book.get("title");
