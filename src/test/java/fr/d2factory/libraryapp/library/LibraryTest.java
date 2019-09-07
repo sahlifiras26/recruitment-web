@@ -22,6 +22,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -122,7 +123,9 @@ public class LibraryTest {
     @Test
     public void members_cannot_borrow_book_if_they_have_late_books(){
     	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(40));
-    	assertNull(library.borrowBook(46578964513L, s3, LocalDate.now()));
+    	Assertions.assertThrows(HasLateBooksException.class, () -> {
+    		library.borrowBook(46578964513L, s3, LocalDate.now());
+    	  });
     }
     @Test
     public void test_number_of_borrowed_books(){

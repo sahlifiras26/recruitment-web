@@ -30,6 +30,7 @@ public class LibraryImplementation implements Library {
 			boolean status = false;
 			if (member instanceof Student) {
 				status = checkIfMemberIsLate(member, borrowedAt, AppConstant.STUDENT_PERIOD);
+				
 			}
 
 			else if (member instanceof Resident) {
@@ -40,6 +41,8 @@ public class LibraryImplementation implements Library {
 				bookRepository.saveBookBorrow(b, borrowedAt);
 				member.addBorrowedBook(b);
 				return b;
+			} else {
+				throw new HasLateBooksException();
 			}
 		}
 		return null;
