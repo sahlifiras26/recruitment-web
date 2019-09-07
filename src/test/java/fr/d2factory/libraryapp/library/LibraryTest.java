@@ -124,4 +124,23 @@ public class LibraryTest {
     	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(40));
     	assertNull(library.borrowBook(46578964513L, s3, LocalDate.now()));
     }
+    @Test
+    public void test_number_of_borrowed_books(){
+    	Book b = bookRepository.findBook(3326456467846L);
+    	library.borrowBook(46578964513L, s1, LocalDate.now());
+    	library.borrowBook(3326456467846L, s1, LocalDate.now());
+    	library.borrowBook(968787565445L, s1, LocalDate.now());
+    	library.borrowBook(465789453149L, s1, LocalDate.now());
+    	assertEquals(4, s1.getBooks().size());
+    }
+    @Test
+    public void test_number_of_borrowed_books_after_retrun(){
+    	Book b = bookRepository.findBook(3326456467846L);
+    	library.borrowBook(46578964513L, s1, LocalDate.now());
+    	library.borrowBook(3326456467846L, s1, LocalDate.now());
+    	library.borrowBook(968787565445L, s1, LocalDate.now());
+    	library.borrowBook(465789453149L, s1, LocalDate.now());
+    	this.library.returnBook(b, s1);
+    	assertEquals(3, s1.getBooks().size());
+    }
 }
