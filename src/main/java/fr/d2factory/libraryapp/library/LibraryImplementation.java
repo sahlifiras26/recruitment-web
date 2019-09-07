@@ -30,9 +30,7 @@ public class LibraryImplementation implements Library {
 			boolean status = false;
 			if (member instanceof Student) {
 				status = checkIfMemberIsLate(member, borrowedAt, AppConstant.STUDENT_PERIOD);
-				
 			}
-
 			else if (member instanceof Resident) {
 				status = checkIfMemberIsLate(member, borrowedAt, AppConstant.RESIDENT_PERIOD);
 			}
@@ -52,39 +50,31 @@ public class LibraryImplementation implements Library {
 	public void returnBook(Book book, Member member) {
 		LocalDate borrowedAt = bookRepository.findBorrowedBookDate(book);
 		LocalDate now = LocalDate.now();
-
 		long dayDiff = ChronoUnit.DAYS.between(borrowedAt, now);
-		
 		if (member.payBook(Math.toIntExact(dayDiff))) {
 			bookRepository.saveBookReturn(book);
-
 			member.removeReturnedBook(book);
 		}
-		
-		
 	}
-
+	//Method of checking if member have at least one book late on the delay.
 	public boolean checkIfMemberIsLate(Member member, LocalDate borrowedAt, long maxBorrowDays ) {
-
 		List<Book> memberBooks = member.getBooks();
 		boolean status = false;
 		if (memberBooks != null) {
 			for (Book book : memberBooks) {
 				LocalDate borrowedTime = bookRepository.findBorrowedBookDate(book);
 				long dayDiff = ChronoUnit.DAYS.between(borrowedTime, borrowedAt);
-
 				if (dayDiff > maxBorrowDays) {
 					status = true;
 				}
 			}
 		}
 		return status;
-
 	}
+	//Method of checking if book is available
+	@Override
 	public boolean checkBookAvailibility(long isbnCode ) {
-
 		Book book = bookRepository.findBook(isbnCode);
-
 		if (book == null)
 			return false;
 		else

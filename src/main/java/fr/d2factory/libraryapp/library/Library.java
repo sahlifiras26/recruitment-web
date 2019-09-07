@@ -37,4 +37,12 @@ public interface Library {
      * @see Member#payBook(int)
      */
     void returnBook(Book book, Member member);
+    /**
+     * Checking book availibility.
+     *
+     * @param isbnCode the isbn code of the book
+     *
+     * @return the true if the book is available else false
+     */
+    public boolean checkBookAvailibility(long isbnCode );
 }

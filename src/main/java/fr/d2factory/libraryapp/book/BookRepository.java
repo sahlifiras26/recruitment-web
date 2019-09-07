@@ -26,7 +26,6 @@ public class BookRepository {
     	
     	borrowedBooks.put(book, borrowedAt);
     	availableBooks.keySet().removeIf(key -> key.equals(book.getIsbn()));
-//    	availableBooks.remove(book.getIsbn());
     }
     
     public void saveBookReturn(Book book) {
