@@ -134,5 +134,9 @@ public class LibraryTest {
 
     @Test
     public void members_cannot_borrow_book_if_they_have_late_books(){
+    	Book b = bookRepository.findBook(3326456467846L);
+    	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(40));
+    	
+    	assertNull(library.borrowBook(46578964513L, s3, LocalDate.now()));
     }
 }
