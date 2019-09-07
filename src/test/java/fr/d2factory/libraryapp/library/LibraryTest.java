@@ -91,7 +91,6 @@ public class LibraryTest {
     public void residents_are_taxed_10cents_for_each_day_they_keep_a_book(){
     	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s2, LocalDate.from(LocalDate.now()).minusDays(10));
-    	List<Book> bbb = s2.getBooks();
     	this.library.returnBook(b, s2);
     	assertEquals(9.0f, s2.getWallet());
     }
@@ -100,7 +99,6 @@ public class LibraryTest {
     public void students_pay_10_cents_the_first_30days(){
     	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(10));
-    	List<Book> bbb = s3.getBooks();
     	this.library.returnBook(b, s3);
     	assertEquals(4.0f, s3.getWallet());
     }
@@ -109,7 +107,6 @@ public class LibraryTest {
     public void students_in_1st_year_are_not_taxed_for_the_first_15days(){
     	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s1, LocalDate.from(LocalDate.now()).minusDays(10));
-    	List<Book> bbb = s1.getBooks();
     	this.library.returnBook(b, s1);
     	assertEquals(100.0f, s1.getWallet());
     }
@@ -118,7 +115,6 @@ public class LibraryTest {
     public void students_pay_15cents_for_each_day_they_keep_a_book_after_the_initial_30days(){
     	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(40));
-    	List<Book> bbb = s3.getBooks();
     	this.library.returnBook(b, s3);
     	assertEquals(0.5f, s3.getWallet());
     }
@@ -127,16 +123,13 @@ public class LibraryTest {
     public void residents_pay_20cents_for_each_day_they_keep_a_book_after_the_initial_60days(){
     	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s2, LocalDate.from(LocalDate.now()).minusDays(70));
-    	List<Book> bbb = s2.getBooks();
     	this.library.returnBook(b, s2);
     	assertEquals(2.0f, s2.getWallet());
     }
 
     @Test
     public void members_cannot_borrow_book_if_they_have_late_books(){
-    	Book b = bookRepository.findBook(3326456467846L);
     	library.borrowBook(3326456467846L, s3, LocalDate.from(LocalDate.now()).minusDays(40));
-    	
     	assertNull(library.borrowBook(46578964513L, s3, LocalDate.now()));
     }
 }
